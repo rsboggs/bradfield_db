@@ -1,0 +1,2 @@
+class ScanIterator < IteratorTest
+end
