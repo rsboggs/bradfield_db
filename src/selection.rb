@@ -1,3 +1,5 @@
+require_relative "scan"
+
 class Selection
 
   def initialize(data, &block)
