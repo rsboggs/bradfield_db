@@ -1,5 +1,3 @@
-require_relative "scan"
-
 class Selection
   def initialize(child, &block)
     @block = block
