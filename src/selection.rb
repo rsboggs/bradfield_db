@@ -1,22 +1,16 @@
 require_relative "scan"
 
 class Selection
-
-  def initialize(data, &block)
+  def initialize(child, &block)
     @block = block
-    @scan = Scan.new(data)
+    @child = child
   end
 
   def next
-    while (value = @scan.next)
+    while (value = @child.next)
       break if @block.call(value)
     end
 
     value
   end
-
-  def close
-    @scan.close
-  end
-
 end
