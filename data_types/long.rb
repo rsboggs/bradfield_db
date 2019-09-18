@@ -5,5 +5,9 @@ module DataTypes
       [value.to_i].pack("L!")
     end
 
+    def from_binary(value)
+      value.unpack("L!").first
+    end
+
   end
 end

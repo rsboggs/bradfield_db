@@ -6,5 +6,9 @@ module DataTypes
       value.unpack("B*").first
     end
 
+    def from_binary(value)
+      [value].pack("B*")
+    end
+
   end
 end
