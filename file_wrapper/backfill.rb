@@ -15,15 +15,19 @@ module FileWrapper
       file_wrapper = FileWrapper::Base.new(table_file: "data/movies.bin")
 
       CSV.foreach(@csv_file_name, headers: true) do |row|
-        record = row.to_h
         @schema.each_with_index do |column_name, index|
-          data_klass = ::DataTypes.const_get(@types[index])
-          binary_value = data_klass.new.to_binary(record[column_name])
-          file_wrapper.write(binary_value)
+          file_wrapper.write(binary_value(row.to_h, column_name, index))
         end
       end
 
       file_wrapper.close
+    end
+
+    private
+
+    def binary_value(record, column_name, index)
+      data_klass = ::DataTypes.const_get(@types[index])
+      data_klass.new.to_binary(record[column_name])
     end
   end
 end
