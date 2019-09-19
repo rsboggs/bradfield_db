@@ -5,24 +5,31 @@ require_relative "../data_types/string"
 module FileWrapper
   class TableReader
     def initialize(table_name: "data/movies.bin")
-      @table_name = table_name
+      @file_wrapper = FileWrapper::Base.new(table_file: table_name)
       @schema = %w[movieId title genres]
       @types = %w[Long String String]
     end
 
-    def perform
-      file_wrapper = FileWrapper::Base.new(table_file: @table_name)
-      # TODO: read fixed width of data
-      data = file_wrapper.read
-      # TODO: process convert data from binary
-      puts data
+    def next_record
+      return nil if @file_wrapper.end_of_file?
+
+      record = []
+      @types.each do |type|
+        record << self.send("next_#{type.downcase}")
+      end
+      record
     end
 
-    private
-
-    def non_binary_value(record, column_name, index)
-      data_klass = ::DataTypes.const_get(@types[index])
-      data_klass.new.from_binary(record[column_name])
+    def next_long
+      value = @file_wrapper.read(8)
+      ::DataTypes::Long.new.from_binary(value)
     end
+
+    def next_string
+      string_length = next_long
+      value = @file_wrapper.read(string_length * 8)
+      ::DataTypes::String.new.from_binary(value)
+    end
+
   end
 end

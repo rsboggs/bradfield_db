@@ -14,12 +14,20 @@ module FileWrapper
       @current_file.write(value)
     end
 
-    def read
-      @current_file.read
+    def read(count = nil)
+      if count
+        @current_file.read(count)
+      else
+        @current_file.read
+      end
     end
 
     def close
       @current_file.close
+    end
+
+    def end_of_file?
+      @current_file.eof?
     end
   end
 end
