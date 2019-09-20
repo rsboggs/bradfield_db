@@ -6,17 +6,17 @@ class Sort
     @column_index = @schema.index(column)
     @unsorted_list = []
     @sorted_list = nil
-  end
 
-  def next
-    while(value = @child.next)
+    while (value = @child.next)
       @unsorted_list << value
     end
 
     if @sorted_list.nil?
       @sorted_list = @unsorted_list.sort_by { |record| record[@column_index] }
     end
+  end
 
+  def next
     # TODO: use more efficient data structure
     @sorted_list.length.zero? ? nil : @sorted_list.shift
   end
