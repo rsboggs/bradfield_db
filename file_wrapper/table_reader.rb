@@ -8,9 +8,9 @@ module FileWrapper
     def initialize(table_name: "data/movies.bin")
       @file_wrapper = FileWrapper::Base.new(table_file: table_name)
       @schema = Schema.new([
-        ["movie_id", ::DataTypes::Long, 1],
-        ["title", ::DataTypes::Char, 255],
-        ["genres", ::DataTypes::Char, 255],
+        ["movie_id", ::DataTypes::Long.new],
+        ["title", ::DataTypes::Char.new(255)],
+        ["genres", ::DataTypes::Char.new(255)],
       ])
     end
 

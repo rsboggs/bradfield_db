@@ -7,8 +7,8 @@ module DataTypes
       field_length = 15
       binary_value = "0110100001100101011011000110110001101111\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
 
-      assert_equal binary_value, ::DataTypes::Char.serialize(char_value, field_length)
-      assert_equal char_value, ::DataTypes::Char.deserialize(binary_value)
+      assert_equal binary_value, ::DataTypes::Char.new(field_length).serialize(char_value)
+      assert_equal char_value, ::DataTypes::Char.new(field_length).deserialize(binary_value)
     end
   end
 end
