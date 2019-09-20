@@ -1,13 +1,13 @@
 require_relative "base"
 require_relative "../data_types/long"
-require_relative "../data_types/string"
+require_relative "../data_types/char"
 
 module FileWrapper
   class TableReader
     def initialize(table_name: "data/movies.bin")
       @file_wrapper = FileWrapper::Base.new(table_file: table_name)
       @schema = %w[movieId title genres]
-      @types = %w[Long String String]
+      @types = %w[Long Char Char]
     end
 
     def next_record
@@ -28,7 +28,7 @@ module FileWrapper
     def next_string
       string_length = next_long
       value = @file_wrapper.read(string_length * 8)
-      ::DataTypes::String.new.from_binary(value)
+      ::DataTypes::Char.new.from_binary(value)
     end
 
   end

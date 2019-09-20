@@ -1,14 +1,14 @@
 require "csv"
 require_relative "base"
 require_relative "../data_types/long"
-require_relative "../data_types/string"
+require_relative "../data_types/char"
 
 module FileWrapper
   class Backfill
     def initialize(csv_file_name:)
       @csv_file_name = csv_file_name
       @schema = %w[movieId title genres]
-      @types = %w[Long String String]
+      @types = %w[Long Char Char]
     end
 
     def perform
