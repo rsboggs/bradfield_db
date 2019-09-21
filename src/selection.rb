@@ -7,10 +7,11 @@ class Selection
     LESS_THAN_TO_OR_EQUAL: "<=",
   }.freeze
 
-  def initialize(child, filters)
+  def initialize(child:, table:, filters:)
     @child = child
-    @schema = %w[movieId title genres]
+    @schema = ::DataTypes::Schema.new(table: table)
     @column, @operator, @value = filters
+    @resolved_operator = OPERATORS[@operator.to_sym]
   end
 
   def next
@@ -22,7 +23,7 @@ class Selection
   end
 
   def is_match?(record)
-    column_index = @schema.index(@column)
-    record[column_index].public_send(OPERATORS[@operator.to_sym], @value)
+    column_index = @schema.fields.index(@column)
+    record[column_index].public_send(@resolved_operator, @value)
   end
 end

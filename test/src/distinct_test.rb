@@ -9,8 +9,9 @@ module Src
         [3, "Grumpier Old Men (1995)", "Comedy|Romance"],
       ])
       distinct = Distinct.new(
-        scan,
-        "title"
+        child: scan,
+        table: "movies",
+        column: "title"
       )
       assert_equal "Toy Story (1995)", distinct.next
       assert_equal "Grumpier Old Men (1995)", distinct.next

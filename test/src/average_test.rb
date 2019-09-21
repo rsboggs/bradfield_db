@@ -9,8 +9,9 @@ module Src
         [3, "Grumpier Old Men (1995)", "Comedy|Romance"],
       ])
       average = Average.new(
-        scan,
-        "movieId"
+        child: scan,
+        table: "movies",
+        column: "movieId"
       )
       assert_equal 2, average.next
       assert_nil average.next

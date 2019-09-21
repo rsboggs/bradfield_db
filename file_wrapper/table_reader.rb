@@ -10,7 +10,7 @@ module FileWrapper
       @schema = Schema.new([
         ["movie_id", ::DataTypes::Long.new],
         ["title", ::DataTypes::Char.new(255)],
-        ["genres", ::DataTypes::Char.new(255)],
+        ["genres", ::DataTypes::Char.new(255)]
       ])
     end
 

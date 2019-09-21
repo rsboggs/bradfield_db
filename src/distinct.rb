@@ -1,9 +1,9 @@
 class Distinct
-  def initialize(child, column)
+  def initialize(child:, table:, column:)
     @child = child
-    @schema = %w[movieId title genres]
+    @schema = ::DataTypes::Schema.new(table: table)
+    @column_index = @schema.fields.index(column)
     @last_value = nil
-    @column_index = @schema.index(column)
   end
 
   def next

@@ -1,23 +1,22 @@
 class Sort
   # Only support 1 column sorting for now
-  def initialize(child, column)
+  def initialize(child:, table:, column:)
     @child = child
-    @schema = %w[movieId title genres]
-    @column_index = @schema.index(column)
+    @schema = ::DataTypes::Schema.new(table: table)
+    @column_index = @schema.fields.index(column)
     @unsorted_list = []
     @sorted_list = nil
 
     while (value = @child.next)
       @unsorted_list << value
     end
+    return unless @sorted_list.nil?
 
-    if @sorted_list.nil?
-      @sorted_list = @unsorted_list.sort_by { |record| record[@column_index] }
-    end
+    @sorted_list = @unsorted_list.sort_by { |record| record[@column_index] }
   end
 
+  # TODO: Implement out of core sorting instead
   def next
-    # TODO: use more efficient data structure
-    @sorted_list.length.zero? ? nil : @sorted_list.shift
+    @sorted_list.empty? ? nil : @sorted_list.shift
   end
 end

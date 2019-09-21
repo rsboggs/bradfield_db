@@ -1,9 +1,9 @@
 class Projection
-  def initialize(child, columns)
+  def initialize(child:, table:, columns:)
     @child = child
-    @schema = %w[movieId title genres]
+    @schema = ::DataTypes::Schema.new(table: table)
     @filtered_column_indexes = columns.each_with_object(Hash.new(false)) do |value, out|
-      index = @schema.index(value)
+      index = @schema.fields.index(value)
       out[index] = true
     end
   end

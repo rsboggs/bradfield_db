@@ -9,8 +9,9 @@ module Src
         [3, "Grumpier Old Men (1995)", "Comedy|Romance"],
       ])
       sort = Sort.new(
-        scan,
-        "title"
+        child: scan,
+        table: "movies",
+        column: "title",
       )
       assert_equal [3, "Grumpier Old Men (1995)", "Comedy|Romance"], sort.next
       assert_equal [2, "Jumanji (1995)", "Adventure|Children|Fantasy"], sort.next

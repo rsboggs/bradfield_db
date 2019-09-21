@@ -9,8 +9,9 @@ module Src
         [3, "Grumpier Old Men (1995)", "Comedy|Romance"],
       ])
       projection = Projection.new(
-        scan,
-        %w[movieId title]
+        child: scan,
+        table: "movies",
+        columns: %w[movieId title]
       )
       assert_equal [1, "Toy Story (1995)"], projection.next
       assert_equal [2, "Jumanji (1995)"], projection.next
