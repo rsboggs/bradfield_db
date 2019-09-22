@@ -2,18 +2,27 @@ require "./test/test"
 
 module Src
   class AverageTest < Test
+    def setup
+      fw = ::FileWrapper::Backfill.new(
+        csv_file_name: "test/data/movies.csv",
+        output_file_name: "test/data/movies_test.bin",
+        table: "movies"
+      )
+      fw.perform
+    end
+
+    def teardown
+      File.truncate("test/data/movies_test.bin", 0)
+    end
+
     def test_next_returns_average_of_column
-      scan = Scan.new([
-        [1, "Toy Story (1995)", "Adventure|Animation|Children|Comedy|Fantasy"],
-        [2, "Jumanji (1995)", "Adventure|Children|Fantasy"],
-        [3, "Grumpier Old Men (1995)", "Comedy|Romance"],
-      ])
       average = Average.new(
-        child: scan,
+        child: ::FileScan.new(table_file_name: "test/data/movies_test.bin", table: "movies"),
         table: "movies",
         column: "movieId"
       )
-      assert_equal 2, average.next
+      # Rounds from 5.5
+      assert_equal 5, average.next
       assert_nil average.next
     end
   end

@@ -1,8 +1,8 @@
 require_relative "../file_wrapper/table_reader"
 
 class FileScan
-  def initialize
-    @fw = FileWrapper::TableReader.new
+  def initialize(table_file_name:, table:)
+    @fw = FileWrapper::TableReader.new(table_file_name: table_file_name, table: table)
   end
 
   def next

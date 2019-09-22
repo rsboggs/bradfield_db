@@ -2,14 +2,22 @@ require "./test/test"
 
 module Src
   class SelectionTest < Minitest::Test
+    def setup
+      fw = ::FileWrapper::Backfill.new(
+        csv_file_name: "test/data/movies.csv",
+        output_file_name: "test/data/movies_test.bin",
+        table: "movies"
+      )
+      fw.perform
+    end
+
+    def teardown
+      File.truncate("test/data/movies_test.bin", 0)
+    end
+
     def test_can_use_equals_operator
-      scan = ::Scan.new([
-        [1, "Toy Story (1995)", "Adventure|Animation|Children|Comedy|Fantasy"],
-        [2, "Jumanji (1995)", "Adventure|Children|Fantasy"],
-        [3, "Grumpier Old Men (1995)", "Comedy|Romance"],
-      ])
       selection = Selection.new(
-        child: scan,
+        child: ::FileScan.new(table_file_name: "test/data/movies_test.bin", table: "movies"),
         table: "movies",
         filters: ["genres", "EQUALS", "Adventure|Children|Fantasy"]
       )
@@ -18,29 +26,19 @@ module Src
     end
 
     def test_can_use_greater_than_operator
-      scan = ::Scan.new([
-        [1, "Toy Story (1995)", "Adventure|Animation|Children|Comedy|Fantasy"],
-        [2, "Jumanji (1995)", "Adventure|Children|Fantasy"],
-        [3, "Grumpier Old Men (1995)", "Comedy|Romance"],
-      ])
       selection = Selection.new(
-        child: scan,
+        child: ::FileScan.new(table_file_name: "test/data/movies_test.bin", table: "movies"),
         table: "movies",
-        filters: ["movieId", "GREATER_THAN", 1]
+        filters: ["movieId", "GREATER_THAN", 8]
       )
-      assert_equal [2, "Jumanji (1995)", "Adventure|Children|Fantasy"], selection.next
-      assert_equal [3, "Grumpier Old Men (1995)", "Comedy|Romance"], selection.next
+      assert_equal [9, "Sudden Death (1995)", "Action"], selection.next
+      assert_equal [10, "GoldenEye (1995)", "Action|Adventure|Thriller"], selection.next
       assert_nil selection.next
     end
 
     def test_can_use_less_than_operator
-      scan = ::Scan.new([
-        [1, "Toy Story (1995)", "Adventure|Animation|Children|Comedy|Fantasy"],
-        [2, "Jumanji (1995)", "Adventure|Children|Fantasy"],
-        [3, "Grumpier Old Men (1995)", "Comedy|Romance"],
-      ])
       selection = Selection.new(
-        child: scan,
+        child: ::FileScan.new(table_file_name: "test/data/movies_test.bin", table: "movies"),
         table: "movies",
         filters: ["movieId", "LESS_THAN", 2]
       )
