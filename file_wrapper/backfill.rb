@@ -5,18 +5,18 @@ require_relative "../data_types/char"
 
 module FileWrapper
   class Backfill
-    def initialize(csv_file_name:)
+    def initialize(csv_file_name:, output_file_name:, table:)
       @csv_file_name = csv_file_name
-      @schema = %w[movieId title genres]
-      @types = %w[Long Char Char]
+      @output_file_name = output_file_name
+      @schema = ::DataTypes::Schema.new(table: table)
     end
 
     def perform
-      file_wrapper = FileWrapper::Base.new(table_file: "data/movies.bin")
+      file_wrapper = FileWrapper::Base.new(table_file: @output_file_name)
 
       CSV.foreach(@csv_file_name, headers: true) do |row|
-        @schema.each_with_index do |column_name, index|
-          file_wrapper.write(binary_value(row.to_h, column_name, index))
+        @schema.fields.each_with_index do |column_name, index|
+          file_wrapper.write(serialize_value(row.to_h, column_name, index))
         end
       end
 
@@ -25,9 +25,9 @@ module FileWrapper
 
     private
 
-    def binary_value(record, column_name, index)
-      data_klass = ::DataTypes.const_get(@types[index])
-      data_klass.new.to_binary(record[column_name])
+    def serialize_value(record, column_name, index)
+      data_instance = @schema.types[index]
+      data_instance.serialize(record[column_name])
     end
   end
 end

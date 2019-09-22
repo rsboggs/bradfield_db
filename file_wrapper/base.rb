@@ -1,8 +1,6 @@
-require "pry"
-
 module FileWrapper
   class Base
-    def initialize(table_file: "data/data.bin")
+    def initialize(table_file: )
       @current_file = File.new(table_file, "rb+")
     end
 

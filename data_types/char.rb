@@ -1,7 +1,10 @@
 module DataTypes
   class Char
+    attr_reader :field_width
+
     def initialize(field_length)
       @field_length = field_length
+      @field_width = field_length * 8
     end
 
     def serialize(value)

@@ -1,7 +1,6 @@
 module DataTypes
   class Schema
-
-    attr_reader :fields
+    attr_reader :fields, :types
 
     def initialize(table:)
       @fields = %w[movieId title genres] # TODO: lookup based on table
