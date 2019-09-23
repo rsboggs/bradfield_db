@@ -17,8 +17,8 @@ module Src
 
     def test_next_returns_distinct_values
       sorted = Sort.new(
-        child: ::FileScan.new(table_file_name: "test/data/movies_test.bin", table: "movies"),
-        table: "movie",
+        child: ::FileScan.new(table: "movies"),
+        table: "movies",
         column: "title"
       )
       distinct = Distinct.new(

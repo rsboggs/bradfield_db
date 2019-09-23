@@ -16,7 +16,7 @@ module Src
     end
 
     def test_can_scan_values
-      scan = ::FileScan.new(table_file_name: "test/data/movies_test.bin", table: "movies")
+      scan = ::FileScan.new(table: "movies")
       assert_equal [1, "Toy Story (1995)", "Adventure|Animation|Children|Comedy|Fantasy"], scan.next
       assert_equal [2, "Jumanji (1995)", "Adventure|Children|Fantasy"], scan.next
       assert_equal [3, "Grumpier Old Men (1995)", "Comedy|Romance"], scan.next

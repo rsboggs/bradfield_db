@@ -14,10 +14,7 @@ module FileWrapper
       )
       fw.perform
 
-      tr = ::FileWrapper::TableReader.new(
-        table_file_name: "test/data/movies_test.bin",
-        table: "movies"
-      )
+      tr = ::FileWrapper::TableReader.new(table: "movies")
       assert_equal(
         [1,"Toy Story (1995)","Adventure|Animation|Children|Comedy|Fantasy"],
         tr.next_record

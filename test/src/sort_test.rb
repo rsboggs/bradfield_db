@@ -17,7 +17,7 @@ module Src
 
     def test_can_sort_values
       sort = Sort.new(
-        child: ::FileScan.new(table_file_name: "test/data/movies_test.bin", table: "movies"),
+        child: ::FileScan.new(table: "movies"),
         table: "movies",
         column: "title",
       )

@@ -17,7 +17,7 @@ module Src
 
     def test_can_use_equals_operator
       selection = Selection.new(
-        child: ::FileScan.new(table_file_name: "test/data/movies_test.bin", table: "movies"),
+        child: ::FileScan.new(table: "movies"),
         table: "movies",
         filters: ["genres", "EQUALS", "Adventure|Children|Fantasy"]
       )
@@ -27,7 +27,7 @@ module Src
 
     def test_can_use_greater_than_operator
       selection = Selection.new(
-        child: ::FileScan.new(table_file_name: "test/data/movies_test.bin", table: "movies"),
+        child: ::FileScan.new(table: "movies"),
         table: "movies",
         filters: ["movieId", "GREATER_THAN", 8]
       )
@@ -38,7 +38,7 @@ module Src
 
     def test_can_use_less_than_operator
       selection = Selection.new(
-        child: ::FileScan.new(table_file_name: "test/data/movies_test.bin", table: "movies"),
+        child: ::FileScan.new(table: "movies"),
         table: "movies",
         filters: ["movieId", "LESS_THAN", 2]
       )

@@ -5,9 +5,9 @@ require_relative "../data_types/schema"
 
 module FileWrapper
   class TableReader
-    def initialize(table_file_name:, table:)
-      @file_wrapper = FileWrapper::Base.new(table_file: table_file_name)
+    def initialize(table:)
       @schema = ::DataTypes::Schema.new(table: table)
+      @file_wrapper = FileWrapper::Base.new(table_file: @schema.table_file_name)
     end
 
     def next_record

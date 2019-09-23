@@ -17,7 +17,7 @@ module Src
 
     def test_next_returns_average_of_column
       average = Average.new(
-        child: ::FileScan.new(table_file_name: "test/data/movies_test.bin", table: "movies"),
+        child: ::FileScan.new(table: "movies"),
         table: "movies",
         column: "movieId"
       )

@@ -13,7 +13,7 @@ module Src
       @table1_index = @schema1.fields.index(column1)
       @table2_index = @schema2.fields.index(column2)
 
-      @file_scan1 = FileScan.new(table: @table1, table_file_name: @table1_file_name)
+      @file_scan1 = FileScan.new(table: @table1)
 
       setup_next_file_scan
     end
@@ -39,7 +39,7 @@ module Src
     private
 
     def setup_next_file_scan
-      @file_scan2 = FileScan.new(table: @table2, table_file_name: @table2_file_name)
+      @file_scan2 = FileScan.new(table: @table2)
       @record1 = @file_scan1.next
       @record2 = @file_scan2.next
     end
