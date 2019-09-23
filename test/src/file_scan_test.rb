@@ -3,22 +3,11 @@ require "./test/test"
 module Src
   class FileScanTest < Minitest::Test
     def setup
-      fw = ::FileWrapper::Backfill.new(
-        csv_file_name: "test/data/movies.csv",
-        output_file_name: "test/data/movies_test.bin",
-        table: "movies"
-      )
-      fw.perform
+      ::Support::Helper.setup_test_data("movies")
     end
 
     def teardown
-      File.truncate("test/data/movies_test.bin", 0)
-    end
-
-    def test_can_scan_values
-      @scan = ::FileScan.new(table: "movies")
-
-      check_scan
+      ::Support::Helper.teardown_test_data("movies")
     end
 
     def test_can_reset

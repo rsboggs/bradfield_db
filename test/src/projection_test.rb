@@ -3,16 +3,11 @@ require "./test/test"
 module Src
   class ProjectionTest < Test
     def setup
-      fw = ::FileWrapper::Backfill.new(
-        csv_file_name: "test/data/movies.csv",
-        output_file_name: "test/data/movies_test.bin",
-        table: "movies"
-      )
-      fw.perform
+      ::Support::Helper.setup_test_data("movies")
     end
 
     def teardown
-      File.truncate("test/data/movies_test.bin", 0)
+      ::Support::Helper.teardown_test_data("movies")
     end
 
     def test_next_returns_only_fields_specified

@@ -3,24 +3,13 @@ require "./test/test"
 module Src
   class NestedLoopsJoinTest < Test
     def setup
-      fw = ::FileWrapper::Backfill.new(
-        csv_file_name: "test/data/movies.csv",
-        output_file_name: "test/data/movies_test.bin",
-        table: "movies"
-      )
-      fw.perform
-
-      fw = ::FileWrapper::Backfill.new(
-        csv_file_name: "test/data/ratings.csv",
-        output_file_name: "test/data/ratings_test.bin",
-        table: "ratings"
-      )
-      fw.perform
+      ::Support::Helper.setup_test_data("movies")
+      ::Support::Helper.setup_test_data("ratings")
     end
 
     def teardown
-      File.truncate("test/data/movies_test.bin", 0)
-      File.truncate("test/data/ratings_test.bin", 0)
+      ::Support::Helper.teardown_test_data("movies")
+      ::Support::Helper.setup_test_data("ratings")
     end
 
     def test_next_returns_joined_data
