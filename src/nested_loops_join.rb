@@ -1,13 +1,11 @@
 module Src
-  class NestedJoin
-    def initialize(table1:, table2:, column1:, column2:, table1_file_name:, table2_file_name:)
+  class NestedLoopsJoin
+    def initialize(table1:, table2:, column1:, column2:)
       @table1 = table1
       @table2 = table2
 
       @schema1 = ::DataTypes::Schema.new(table: @table1)
       @schema2 = ::DataTypes::Schema.new(table: @table2)
-      @table1_file_name = table1_file_name
-      @table2_file_name = table2_file_name
 
       # Only support joining on 1 column for now
       @table1_index = @schema1.fields.index(column1)

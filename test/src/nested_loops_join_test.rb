@@ -1,7 +1,7 @@
 require "./test/test"
 
 module Src
-  class NestedJoinTest < Test
+  class NestedLoopsJoinTest < Test
     def setup
       fw = ::FileWrapper::Backfill.new(
         csv_file_name: "test/data/movies.csv",
@@ -24,13 +24,11 @@ module Src
     end
 
     def test_next_returns_joined_data
-      nested_join = NestedJoin.new(
+      nested_join = NestedLoopsJoin.new(
         table1: "movies",
         table2: "ratings",
         column1: "movieId",
-        column2: "movieId",
-        table1_file_name: "test/data/movies_test.bin",
-        table2_file_name: "test/data/ratings_test.bin",
+        column2: "movieId"
       )
 
       assert_equal(
