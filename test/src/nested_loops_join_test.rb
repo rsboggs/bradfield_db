@@ -25,6 +25,8 @@ module Src
 
     def test_next_returns_joined_data
       nested_join = NestedLoopsJoin.new(
+        child1: FileScan.new(table: "movies"),
+        child2: FileScan.new(table: "ratings"),
         table1: "movies",
         table2: "ratings",
         column1: "movieId",
