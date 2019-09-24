@@ -16,31 +16,21 @@ module Src
       nested_join = NestedLoopsJoin.new(
         child1: FileScan.new(table: "movies"),
         child2: FileScan.new(table: "ratings"),
-        table1: "movies",
-        table2: "ratings",
-        column1: "movieId",
-        column2: "movieId"
+        theta: lambda do |record1, record2|
+          record1[0] == record2[2]
+        end
       )
 
       assert_equal(
-        [
-          [1,"Toy Story (1995)", "Adventure|Animation|Children|Comedy|Fantasy"],
-          [1, 80766, 1, 5],
-        ],
+        [1,"Toy Story (1995)", "Adventure|Animation|Children|Comedy|Fantasy", 1, 80766, 1, 5],
         nested_join.next
       )
       assert_equal(
-        [
-          [1,"Toy Story (1995)", "Adventure|Animation|Children|Comedy|Fantasy"],
-          [2, 80767, 1, 4],
-        ],
+        [1,"Toy Story (1995)", "Adventure|Animation|Children|Comedy|Fantasy", 2, 80767, 1, 4],
         nested_join.next
       )
       assert_equal(
-        [
-          [2, "Jumanji (1995)", "Adventure|Children|Fantasy"],
-          [3, 80766, 2, 4],
-        ],
+        [2, "Jumanji (1995)", "Adventure|Children|Fantasy", 3, 80766, 2, 4],
         nested_join.next
       )
       assert_nil nested_join.next
