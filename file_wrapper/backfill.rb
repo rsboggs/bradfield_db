@@ -29,5 +29,9 @@ module FileWrapper
       data_instance = @schema.types[index]
       data_instance.serialize(record[column_name])
     end
+
+    def page_size
+      ::FileWrapper::TableReader::PAGE_SIZE
+    end
   end
 end

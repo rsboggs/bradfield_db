@@ -7,7 +7,7 @@ class FileScan
   end
 
   def next
-    @fw.next_record
+    @fw.next
   end
 
   def reset

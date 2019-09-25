@@ -2,6 +2,12 @@ require "./test/test"
 
 module FileWrapper
   class BackfillTest < Test
+    def setup
+      # Allow 1 record per page
+      ::FileWrapper::Backfill.any_instance.stubs(:page_size).returns(4088 * 1)
+      ::FileWrapper::TableReader.any_instance.stubs(:page_size).returns(4088 * 1)
+    end
+
     def teardown
       File.truncate("test/data/movies_test.bin", 0)
     end
@@ -17,12 +23,12 @@ module FileWrapper
       tr = ::FileWrapper::TableReader.new(table: "movies")
       assert_equal(
         [1,"Toy Story (1995)","Adventure|Animation|Children|Comedy|Fantasy"],
-        tr.next_record
+        tr.next
       )
       9.times do
-        refute_nil tr.next_record
+        refute_nil tr.next
       end
-      assert_nil tr.next_record
+      assert_nil tr.next
     end
   end
 end

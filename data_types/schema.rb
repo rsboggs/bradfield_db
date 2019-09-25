@@ -1,6 +1,6 @@
 module DataTypes
   class Schema
-    attr_reader :fields, :types, :table_file_name
+    attr_reader :fields, :types, :table_file_name, :record_width
 
     def initialize(table:)
       # extract the lookup
@@ -25,6 +25,8 @@ module DataTypes
       else
         raise NotImplementedError
       end
+
+      @record_width = @types.sum(&:field_width)
     end
   end
 end
