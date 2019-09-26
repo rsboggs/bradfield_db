@@ -5,7 +5,7 @@ require_relative "../data_types/schema"
 
 module FileWrapper
   class TableReader
-    PAGE_SIZE = 4088 # TODO: confirm this is correct
+    PAGE_SIZE = 8 * 1000 * 8  # 8 kb
 
     def initialize(table:)
       @schema = ::DataTypes::Schema.new(table: table)

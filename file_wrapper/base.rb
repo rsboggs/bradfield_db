@@ -4,8 +4,8 @@ module FileWrapper
       @current_file = File.new(table_file, "rb+")
     end
 
-    def seek(change)
-      @current_file.seek(change)
+    def seek(change, mode = ::IO::SEEK_SET)
+      @current_file.seek(change, mode)
     end
 
     def write(value)
@@ -22,6 +22,10 @@ module FileWrapper
 
     def close
       @current_file.close
+    end
+
+    def position
+      @current_file.pos
     end
 
     def end_of_file?
