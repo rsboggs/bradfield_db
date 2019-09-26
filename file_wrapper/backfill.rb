@@ -11,6 +11,7 @@ module FileWrapper
       @schema = ::DataTypes::Schema.new(table: table)
       @record_count_in_page = 0
       @max_record_count_in_page = page_size / @schema.record_width
+      @current_page = 0
     end
 
     def perform
@@ -18,8 +19,10 @@ module FileWrapper
 
       CSV.foreach(@csv_file_name, headers: true) do |row|
         if @record_count_in_page == @max_record_count_in_page
-          file_wrapper.seek(page_size - @schema.record_width * @max_record_count_in_page, ::IO::SEEK_CUR)
+          next_page_position = (@current_page + 1) * page_size
+          file_wrapper.seek(next_page_position)
           @record_count_in_page = 0
+          @current_page += 1
         end
 
         @schema.fields.each_with_index do |column_name, index|
