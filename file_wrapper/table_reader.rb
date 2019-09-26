@@ -16,7 +16,7 @@ module FileWrapper
 
     def next
       while @current_page
-        record_count = @current_page.size / page_size # should store in page headers
+        record_count = @current_page.size / @schema.record_width
         first_index = @schema.record_width * @current_record_index
         last_index = first_index + @schema.record_width
 

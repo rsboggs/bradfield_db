@@ -4,8 +4,8 @@ module FileWrapper
   class BackfillTest < Test
     def setup
       # Allow 1 record per page
-      ::FileWrapper::Backfill.any_instance.stubs(:page_size).returns(4088 * 1)
-      ::FileWrapper::TableReader.any_instance.stubs(:page_size).returns(4088 * 1)
+      ::FileWrapper::Backfill.any_instance.stubs(:page_size).returns(4088 * 3)
+      ::FileWrapper::TableReader.any_instance.stubs(:page_size).returns(4088 * 3)
     end
 
     def teardown
