@@ -46,10 +46,10 @@ module Table
       record
     end
 
-    def save_header_data
+    def save_header_data(reset_position: false)
       @file_wrapper.write(long.serialize(@free_space_start))
       @file_wrapper.write(long.serialize(@free_space_end))
-      @file_wrapper.seek(-width)
+      @file_wrapper.seek(-width) if reset_position
     end
 
     def long

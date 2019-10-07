@@ -47,9 +47,11 @@ module Table
 
     def save_record(record)
       record_location = @page_header.free_space_end - record.width
+      page_item_location = @page_header.free_space_start
+      page_item = ::Table::PageItem.new(file_wrapper: @file_wrapper, page_record_offset: record_location)
+      page_item.save(location: page_item_location)
+      @file_wrapper.seek(-(page_item_location + page_item.width))
       record.save(location: record_location)
-      # page_item = ::Table::PageItem.new(page_record_offset: record_location)
-      # page_item.save(location: @page_header.free_space_start)
 
       @page_header.increment_space_offsets(page_item_width, record.width)
     end

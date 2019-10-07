@@ -15,7 +15,7 @@ module Table
     end
 
     def width
-      PAGE_BIT_WIDTH
+      PAGE_ITEM_BIT_WIDTH
     end
 
     def long
