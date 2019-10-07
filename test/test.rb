@@ -1,6 +1,6 @@
 require "require_all"
 require "minitest/autorun"
-require "mocha/mini_test"
+require "mocha/minitest"
 require "pry"
 require_all "data_types"
 require_all "src"

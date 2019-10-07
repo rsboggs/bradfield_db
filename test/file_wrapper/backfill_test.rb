@@ -5,7 +5,6 @@ module FileWrapper
     def setup
       # Allow 1 record per page
       ::FileWrapper::Backfill.any_instance.stubs(:page_size).returns(10_000)
-      ::FileWrapper::TableReader.any_instance.stubs(:page_size).returns(10_000)
     end
 
     def teardown
@@ -20,15 +19,15 @@ module FileWrapper
       )
       fw.perform
 
-      tr = ::FileWrapper::TableReader.new(table: "movies")
+      tb = ::Table::Base.new(table: "movies")
       assert_equal(
-        [1,"Toy Story (1995)","Adventure|Animation|Children|Comedy|Fantasy"],
-        tr.next
+        [1, "Toy Story (1995)", "Adventure|Animation|Children|Comedy|Fantasy"],
+        tb.next
       )
       9.times do
-        refute_nil tr.next
+        refute_nil tb.next
       end
-      assert_nil tr.next
+      assert_nil tb.next
     end
   end
 end

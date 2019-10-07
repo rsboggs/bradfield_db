@@ -4,7 +4,7 @@ module FileWrapper
       @current_file = File.new(table_file, "rb+")
     end
 
-    def seek(change, mode = ::IO::SEEK_SET)
+    def seek(change, mode = ::IO::SEEK_CUR)
       @current_file.seek(change, mode)
     end
 

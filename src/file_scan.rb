@@ -1,5 +1,3 @@
-require_relative "../file_wrapper/table_reader"
-
 class FileScan
   def initialize(table:)
     @table = table
@@ -7,10 +5,10 @@ class FileScan
   end
 
   def next
-    @fw.next
+    @table_base.next_record
   end
 
   def reset
-    @fw = FileWrapper::TableReader.new(table: @table)
+    @table_base = ::Table::Base.new(table: @table)
   end
 end
