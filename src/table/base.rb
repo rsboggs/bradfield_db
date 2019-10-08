@@ -17,7 +17,7 @@ module Table
       )
 
       while @current_page
-      #   return @current_page.insert_record(record) if @current_page.can_insert_record?(record)
+        return @current_page.insert_record(record) if @current_page.can_insert_record?(record)
 
         set_next_page
       end
@@ -40,7 +40,7 @@ module Table
     end
 
     def reset_scan
-      @file_wrapper = FileWrapper::Base.new(table_file: @schema.table_file_name)
+      @file_wrapper = ::FileWrapper::Base.new(table_file: @schema.table_file_name)
       set_next_page
     end
 

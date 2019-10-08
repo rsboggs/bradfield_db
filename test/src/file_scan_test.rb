@@ -4,10 +4,12 @@ module Src
   class FileScanTest < Minitest::Test
     def setup
       ::Support::Helper.setup_test_data("movies")
+      ::Support::Helper.setup_test_data("ratings")
     end
 
     def teardown
       ::Support::Helper.teardown_test_data("movies")
+      ::Support::Helper.teardown_test_data("ratings")
     end
 
     def test_can_reset
@@ -19,6 +21,15 @@ module Src
 
       @scan.reset
       check_scan
+    end
+
+    def test_can_reset_for_other_table
+      @scan = ::FileScan.new(table: "ratings")
+
+      assert_equal [1, 80_766, 1, 5], @scan.next
+
+      @scan.reset
+      check_scan_ratings
     end
 
     private
@@ -35,6 +46,12 @@ module Src
       assert_equal [9, "Sudden Death (1995)", "Action"], @scan.next
       assert_equal [10, "GoldenEye (1995)", "Action|Adventure|Thriller"], @scan.next
       assert_nil @scan.next
+    end
+
+    def check_scan_ratings
+      assert_equal [1, 80_766, 1, 5], @scan.next
+      assert_equal [2, 80_767, 1, 4], @scan.next
+      assert_equal [3, 80_766, 2, 4], @scan.next
     end
   end
 end

@@ -9,7 +9,7 @@ module Src
 
     def teardown
       ::Support::Helper.teardown_test_data("movies")
-      ::Support::Helper.setup_test_data("ratings")
+      ::Support::Helper.teardown_test_data("ratings")
     end
 
     def test_next_returns_joined_data
