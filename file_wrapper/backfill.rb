@@ -10,7 +10,7 @@ module FileWrapper
 
     def perform
       CSV.foreach(@csv_file_name, headers: true) do |row|
-        @table_base.insert_record(row.to_h)
+        @table_base.insert_record(row.to_h.values)
       end
     end
   end

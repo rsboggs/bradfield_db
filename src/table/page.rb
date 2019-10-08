@@ -11,7 +11,7 @@ module Table
       @file_wrapper = file_wrapper
       @schema = schema
       @page_content = page_content
-      @current_position = 16
+      @current_position = @page_header.width
       @page_item_end_position = @page_header.free_space_start - 1
     end
 
@@ -31,6 +31,8 @@ module Table
     end
 
     def next_record
+      return nil if @current_position >= @page_item_end_position
+
       current_record_index_binary = @page_content[@current_position..@page_item_end_position]
       current_record_index = long.deserialize(current_record_index_binary)
       record = []
@@ -39,8 +41,8 @@ module Table
         record << type.deserialize(next_value)
         current_record_index += type.field_width
       end
-      binding.pry
 
+      @current_position += long.field_width
       record
     end
 
