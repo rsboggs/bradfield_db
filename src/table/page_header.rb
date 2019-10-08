@@ -1,6 +1,6 @@
 module Table
   class PageHeader
-    attr_reader :page_index, :free_space_end, :free_space_start
+    attr_reader :free_space_end, :free_space_start
 
     def initialize(page:, file_wrapper:, new_page:)
       @file_wrapper = file_wrapper
@@ -20,7 +20,7 @@ module Table
     def increment_space_offsets(start_offset, end_offset)
       @free_space_start += start_offset
       @free_space_end -= end_offset
-      save_header_data
+      save_header_data(reset_position: true)
     end
 
     def create
@@ -29,6 +29,10 @@ module Table
 
     def width
       long.field_width * 2
+    end
+
+    def record_count
+      (free_space_start - width) / ::Table::PageItem::PAGE_ITEM_BIT_WIDTH
     end
 
     private

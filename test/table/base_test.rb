@@ -7,17 +7,14 @@ module Table
     end
 
     def test_insert_record
-      values = [
-        1,
-        "Toy Story (1995)",
-        "Adventure|Animation|Children|Comedy|Fantasy"
-      ]
       table_base.insert_record(values)
-      # Check page
     end
 
-    # def test_next_record
-    # end
+    def test_next_record
+      table_base.insert_record(values)
+
+      assert_equal values, table_base.next_record
+    end
 
     # def test_reset_scan
     # end
@@ -26,6 +23,14 @@ module Table
 
     def table_base
       ::Table::Base.new(table: "movies")
+    end
+
+    def values
+      [
+        1,
+        "Toy Story (1995)",
+        "Adventure|Animation|Children|Comedy|Fantasy"
+      ]
     end
   end
 end

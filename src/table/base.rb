@@ -54,11 +54,11 @@ module Table
       return nil if @file_wrapper.end_of_file?
 
       page_content = @file_wrapper.read(page_width)
-      ::Table::Page.new(page_content: page_content, file_wrapper: @file_wrapper)
+      ::Table::Page.new(page_content: page_content, file_wrapper: @file_wrapper, schema: @schema)
     end
 
     def create_new_page
-      table_page = ::Table::Page.new(page_content: nil, file_wrapper: @file_wrapper)
+      table_page = ::Table::Page.new(page_content: nil, file_wrapper: @file_wrapper, schema: @schema)
       table_page.create
       table_page
     end
